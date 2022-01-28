@@ -1,0 +1,55 @@
+﻿@page
+@using System.Linq.Expressions;
+@model MfxMovieReview.Pages.Movies.IndexModel
+@{
+	this.ViewContext.ViewData["Title"] = "Movies";
+
+	void GetHeader(Expression<Func<IndexModel, string>> expression)
+	{
+		<div class="d-md-table-cell col-md p-3 h5 text-center">
+			@Html.DisplayNameFor(expression)
+		</div>
+	}
+
+	void GetCells(int itemIndex)
+	{
+		<div class="d-md-table-cell col-md p-2 text-left">
+			@Html.DisplayFor(m => m.PopularData.Items[itemIndex].FullTitle)
+		</div>
+		<div class="d-md-table-cell col-md p-2 text-center">
+			@Html.DisplayFor(m => m.PopularData.Items[itemIndex].Rank)
+		</div>
+		<div class="d-md-table-cell col-md p-2 text-center">
+			@Html.DisplayFor(m => m.PopularData.Items[itemIndex].RankUpDown)
+		</div>
+		<div class="d-md-table-cell col-md p-2 text-center">
+			@Html.DisplayFor(m => m.PopularData.Items[itemIndex].IMDbRating)
+		</div>
+		<div class="d-md-table-cell col-md p-2 text-center">
+			@Html.DisplayFor(m => m.PopularData.Items[itemIndex].IMDbRatingCount)
+		</div>
+	}
+}
+
+<h1 class="display-2 text-left pl-2">
+	Movies
+</h1>
+<div class="container-fluid mx-md-3">
+	<div class="d-md-table">
+		<div class="d-md-table-row row">
+			@{
+				GetHeader(m => Model.PopularData.Items[0].FullTitle);
+				GetHeader(m => Model.PopularData.Items[0].Rank);
+				GetHeader(m => Model.PopularData.Items[0].RankUpDown);
+				GetHeader(m => Model.PopularData.Items[0].IMDbRating);
+				GetHeader(m => Model.PopularData.Items[0].IMDbRatingCount);
+			}
+		</div>
+		@for (int i = 0; i < Model.PopularData.Items.Count; i++)
+		{
+			<div class="d-md-table-row row">
+				@{GetCells(i);}
+			</div>
+		}
+	</div>
+</div>
